@@ -1,0 +1,75 @@
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#9881;</div>
+        <span class="section-title">Record Metadata</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Created From</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdFrom']), '&#8212;', variables('DRR')?['createdFrom'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Role Repository GUID</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['applicationRepositoryId']), '&#8212;', variables('DRR')?['applicationRepositoryId'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Created On</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdOn']), '&#8212;', variables('DRR')?['createdOn'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified On</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['modifiedOn']), '&#8212;', variables('DRR')?['modifiedOn'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Created By</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdBy']), '&#8212;', variables('DRR')?['createdBy'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Created By Email</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdByEmail']), '&#8212;', variables('DRR')?['createdByEmail'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified By</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['modifiedBy']), '&#8212;', variables('DRR')?['modifiedBy'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified By Email</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['modifiedByEmail']), '&#8212;', variables('DRR')?['modifiedByEmail'])}</div>
+        </div>
+
+        <div class="field span-full" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">SPO ID (Legacy)</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['spoIdOld']), '&#8212;', variables('DRR')?['spoIdOld'])}</div>
+        </div>
+
+        <div class="field shaded" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Creation Date</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalCreationDate']), '&#8212;', variables('DRR')?['originalCreationDate'])}</div>
+        </div>
+
+        <div class="field shaded" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Modified Date</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalModifiedDate']), '&#8212;', variables('DRR')?['originalModifiedDate'])}</div>
+        </div>
+
+        <div class="field" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Created By</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalCreatedBy']), '&#8212;', variables('DRR')?['originalCreatedBy'])}</div>
+        </div>
+
+        <div class="field field-last" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Created By Email</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalCreatedByEmail']), '&#8212;', variables('DRR')?['originalCreatedByEmail'])}</div>
+        </div>
+
+      </div>
+    </div>

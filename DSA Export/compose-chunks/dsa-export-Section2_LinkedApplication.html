@@ -1,0 +1,66 @@
+    <!-- Section 2: Linked Application (DRR) -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128196;</div>
+        <span class="section-title">Linked Application</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Application Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['applicationName']), '&#8212;', variables('REC')?['applicationName'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">DRR Number</div>
+          <div class="field-value">@{if(empty(variables('REC')?['drrNumber']), '&#8212;', variables('REC')?['drrNumber'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Application Type</div>
+          <div class="field-value">@{if(empty(variables('REC')?['applicationType']), '&#8212;', variables('REC')?['applicationType'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Application In-Scope?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['applicationinScope']), '&#8212;', variables('REC')?['applicationinScope'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Line of Business (LOB)</div>
+          <div class="field-value">@{if(empty(variables('REC')?['lob']), '&#8212;', variables('REC')?['lob'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">MAP ID</div>
+          <div class="field-value">@{if(empty(variables('REC')?['mapId']), '&#8212;', variables('REC')?['mapId'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Organizational Spoke</div>
+          <div class="field-value">@{if(empty(variables('REC')?['organizationalSpoke']), '&#8212;', variables('REC')?['organizationalSpoke'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Spoke Segment</div>
+          <div class="field-value">@{if(empty(variables('REC')?['spokeSegment']), '&#8212;', variables('REC')?['spokeSegment'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Asset Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataAssetName']), '&#8212;', variables('REC')?['dataAssetName'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Domain</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataDomain']), '&#8212;', variables('REC')?['dataDomain'])}</div>
+        </div>
+
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Exclusion Reason</div>
+          <div class="field-value">@{if(empty(variables('REC')?['exclusionReason']), '&#8212;', variables('REC')?['exclusionReason'])}</div>
+        </div>
+
+      </div>
+    </div>

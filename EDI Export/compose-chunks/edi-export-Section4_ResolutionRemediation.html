@@ -1,0 +1,56 @@
+    <!-- Section 4: Resolution & Remediation -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128295;</div>
+        <span class="section-title">Resolution &amp; Remediation</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Resolution Owner</div>
+          <div class="field-value">@{if(empty(variables('REC')?['resolutionOwner']), '&#8212;', variables('REC')?['resolutionOwner'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Resolution Owner Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['resolutionOwnerEmail']), '&#8212;', variables('REC')?['resolutionOwnerEmail'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Resolution Team</div>
+          <div class="field-value">@{if(empty(variables('REC')?['resolutionTeam']), '&#8212;', variables('REC')?['resolutionTeam'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">In Review with Resolution Owner</div>
+          <div class="field-value">@{if(empty(variables('REC')?['inReviewWithResolutionOwner']), '&#8212;', formatDateTime(variables('REC')?['inReviewWithResolutionOwner'], 'MMMM d, yyyy'))}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Estimated Resolution / Closure Date</div>
+          <div class="field-value">@{if(empty(variables('REC')?['estimatedResolutionClosureDate']), '&#8212;', formatDateTime(variables('REC')?['estimatedResolutionClosureDate'], 'MMMM d, yyyy'))}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Closure Date</div>
+          <div class="field-value">@{if(empty(variables('REC')?['closureDate']), '&#8212;', formatDateTime(variables('REC')?['closureDate'], 'MMMM d, yyyy'))}</div>
+        </div>
+
+        <div class="field shaded span-full">
+          <div class="field-label">Root Cause Analysis</div>
+          <div class="field-value">@{if(empty(variables('REC')?['rootCauseAnalysis']), '&#8212;', variables('REC')?['rootCauseAnalysis'])}</div>
+        </div>
+
+        <div class="field span-full">
+          <div class="field-label">Resolution Action Plan</div>
+          <div class="field-value">@{if(empty(variables('REC')?['resolutionActionPlan']), '&#8212;', variables('REC')?['resolutionActionPlan'])}</div>
+        </div>
+
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Resolution Owner Comment</div>
+          <div class="field-value">@{if(empty(variables('REC')?['resolutionOwnerComment']), '&#8212;', variables('REC')?['resolutionOwnerComment'])}</div>
+        </div>
+
+      </div>
+    </div>

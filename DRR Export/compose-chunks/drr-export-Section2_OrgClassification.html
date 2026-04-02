@@ -1,0 +1,25 @@
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#127970;</div>
+        <span class="section-title">Organizational Classification</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Line of Business (LOB)</div>
+          <div class="field-value">@{variables('DRR')?['lob']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Organizational Spoke</div>
+          <div class="field-value">@{variables('DRR')?['organizationalSpoke']}</div>
+        </div>
+
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Spoke Segment</div>
+          <div class="field-value">@{variables('DRR')?['spokeSegment']}</div>
+        </div>
+
+      </div>
+    </div>

@@ -1,0 +1,42 @@
+  <!-- DOCUMENT HEADER -->
+  <div class="doc-header">
+    <div class="header-single-row">
+      <div class="header-brand">
+        <div class="header-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="4" fill="rgb(169,29,65)"/>
+            <rect x="7" y="8"  width="18" height="3" rx="1.5" fill="white"/>
+            <rect x="7" y="14" width="13" height="3" rx="1.5" fill="white"/>
+            <rect x="7" y="20" width="18" height="3" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="header-org-label">CIBC &nbsp;·&nbsp; Enterprise Data Management</div>
+          <div class="header-app-name">Data Sharing Agreement</div>
+          <div class="header-record-name">@{variables('REC')?['dsaNumber']} <span class="header-status-badge">@{if(empty(variables('REC')?['dsaStatus']), 'Unknown', variables('REC')?['dsaStatus'])}</span></div>
+        </div>
+      </div>
+
+      <div class="header-side-meta">
+        <div class="retention-badge">
+          <span class="retention-badge-label">Retention Period</span>
+          <span class="retention-badge-years">7</span>
+          <span class="retention-badge-years-suffix">Years</span>
+        </div>
+        <div class="header-generated-date">Generated: @{formatDateTime(utcNow(), 'MMMM d, yyyy')}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RETENTION NOTICE -->
+  <div class="retention-notice">
+    <span class="retention-notice-icon">&#128274;</span>
+    <span class="retention-notice-text">
+      <strong>Mandatory Retention Notice:</strong>&nbsp;
+      This document is subject to a <strong>7-year</strong> mandatory retention schedule in accordance with
+      CIBC Enterprise Data Management policies and applicable regulatory requirements.
+      Do not destroy before the retention expiry date noted in the footer.
+      Classification: <strong>Internal / Confidential</strong>.
+    </span>
+  </div>

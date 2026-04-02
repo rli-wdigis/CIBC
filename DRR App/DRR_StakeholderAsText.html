@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            font-size: 13px;
+            margin: 12px;
+            color: #323130;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        thead th {
+            background-color: rgb(139, 27, 64);
+            color: #ffffff;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        tbody td {
+            padding: 9px 16px;
+            border-bottom: 1px solid #edebe9;
+        }
+        tbody tr:nth-child(odd) td {
+            background-color: #f3f6fb;
+        }
+        tbody tr:nth-child(even) td {
+            background-color: #ffffff;
+        }
+        tbody tr:hover td {
+            background-color: #f5dde4;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-read {
+            background-color: #dff6dd;
+            color: #107c10;
+        }
+        .badge-edit {
+            background-color: #fff4ce;
+            color: #835c00;
+        }
+        .empty-state {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #605e5c;
+            font-style: italic;
+            padding: 10px 4px;
+        }
+        .empty-state::before {
+            content: "ℹ️";
+            font-style: normal;
+        }
+        #error-msg {
+            color: #a4262c;
+            font-style: italic;
+        }
+        .section-header {
+            font-size: 12px;
+            font-weight: 600;
+            color: #605e5c;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #edebe9;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <p class="section-header">DRR Stakeholders (Migrated from SharePoint) &mdash; Read Only</p>
+    <div id="table-container">Loading...</div>
+
+    <script>
+        function renderStakeholders(jsonText) {
+            const container = document.getElementById("table-container");
+
+            // Handle null, undefined, or empty string
+            if (!jsonText || jsonText.trim() === "") {
+                container.innerHTML = "<p class='empty-state'>No additional stakeholders found.</p>";
+                return;
+            }
+
+            try {
+                const data = JSON.parse(jsonText);
+
+                // Handle empty array
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = "<p class='empty-state'>No additional stakeholders found.</p>";
+                    return;
+                }
+
+                let html = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Display Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Access</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                data.forEach(row => {
+                    const accessBadge = row.access === "Edit"
+                        ? `<span class="badge badge-edit">Edit</span>`
+                        : `<span class="badge badge-read">Read</span>`;
+
+                    html += `
+                        <tr>
+                            <td>${row.dn ?? ""}</td>
+                            <td>${row.email ?? ""}</td>
+                            <td>${row.role ?? ""}</td>
+                            <td>${accessBadge}</td>
+                        </tr>
+                    `;
+                });
+
+                html += "</tbody></table>";
+                container.innerHTML = html;
+
+            } catch (e) {
+                container.innerHTML = `<p id="error-msg">Failed to parse JSON: ${e.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

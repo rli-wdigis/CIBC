@@ -1,0 +1,25 @@
+    <!-- Section 6: DSA Notes -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128221;</div>
+        <span class="section-title">
+          DSA Notes
+          <span class="stakeholder-count">@{length(variables('Notes'))}</span>
+        </span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="sh-table notes-table">
+          <thead>
+            <tr>
+              <th style="width:20%">Created</th>
+              <th style="width:20%">Modified</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            @{if(equals(length(variables('Notes')), 0), '<tr><td colspan="3" style="text-align:center;color:#6b7280;font-style:italic;padding:12px;">No notes recorded.</td></tr>', join(body('Select_NoteRows'), ''))}
+          </tbody>
+        </table>
+      </div>
+    </div>

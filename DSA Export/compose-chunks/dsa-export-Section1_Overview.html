@@ -1,0 +1,21 @@
+    <!-- Section 1: DSA Overview -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128203;</div>
+        <span class="section-title">DSA Overview</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field field-last">
+          <div class="field-label">Is this request for access or sharing structured data?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['isStructuredDataRequest']), '&#8212;', variables('REC')?['isStructuredDataRequest'])}</div>
+        </div>
+
+        <div class="field field-last">
+          <div class="field-label">Is this request for authorization to use structured data for another purpose than originally intended?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['isThisAuthorizationForOtherPurpose']), '&#8212;', variables('REC')?['isThisAuthorizationForOtherPurpose'])}</div>
+        </div>
+
+      </div>
+    </div>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Role Repository — Application Record | CIBC</title>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 12px; }
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      background: #e8eaed;
+      color: #111827;
+      line-height: 1.4;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Color Tokens ───────────────────────────────────────── */
+    :root {
+      --brand:          rgb(169, 29, 65);
+      --brand-dark:     rgb(118, 18, 44);
+      --brand-light:    rgb(208, 55, 93);
+      --brand-subtle:   rgba(169, 29, 65, 0.06);
+      --brand-border:   rgba(169, 29, 65, 0.16);
+      --text-primary:   #111827;
+      --text-secondary: #374151;
+      --text-muted:     #9ca3af;
+      --border:         #e5e7eb;
+      --surface:        #f9fafb;
+      --white:          #ffffff;
+    }
+
+    /* ── Page Wrapper ──────────────────────────────────────── */
+    .page {
+      max-width: 820px;
+      margin: 20px auto;
+      background: var(--white);
+      box-shadow: 0 6px 48px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    }
+    @media print {
+      body  { background: white; }
+      .page { max-width: 100%; margin: 0; box-shadow: none; }
+    }
+    @page {
+      size: A4;
+      margin: 10mm 10mm 10mm 10mm;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       DOCUMENT HEADER
+    ═══════════════════════════════════════════════════════ */
+    .doc-header {
+      background: linear-gradient(148deg, var(--brand-dark) 0%, var(--brand) 52%, var(--brand-light) 100%);
+      padding: 22px 28px 18px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Decorative circles */
+    .doc-header::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -30px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .doc-header::after {
+      content: '';
+      position: absolute;
+      bottom: -70px; right: 100px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+
+    .header-single-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Logo + org block */
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-logo {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
+    }
+    .header-logo svg { display: block; }
+    .header-org-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.58);
+      margin-bottom: 4px;
+    }
+    .header-app-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+    }
+
+    /* Retention badge */
+    .retention-badge {
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.13);
+      border: 1.5px solid rgba(255,255,255,0.28);
+      border-radius: 8px;
+      padding: 7px 14px;
+      text-align: center;
+    }
+    .retention-badge-label {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.58);
+      margin-bottom: 3px;
+    }
+    .retention-badge-years {
+      display: block;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .retention-badge-years-suffix {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.7);
+      margin-top: 2px;
+    }
+    .header-side-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .header-generated-date {
+      font-size: 9px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    .header-record-name {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RETENTION NOTICE BAND
+    ═══════════════════════════════════════════════════════ */
+    .retention-notice {
+      background: var(--brand-subtle);
+      border-bottom: 1px solid var(--brand-border);
+      padding: 8px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .retention-notice-icon {
+      font-size: 15px;
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+    .retention-notice-text {
+      font-size: 10px;
+      color: var(--brand-dark);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .retention-notice-text strong { font-weight: 800; }
+
+    /* ═══════════════════════════════════════════════════════
+       DOCUMENT BODY
+    ═══════════════════════════════════════════════════════ */
+    .doc-body {
+      padding: 22px 28px 28px;
+    }
+
+    /* ── Section Block ──────────────────────────────────── */
+    .section {
+      margin-bottom: 20px;
+    }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid var(--brand);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    .section-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--brand);
+    }
+
+    /* ── Field Grid (CSS Grid) ──────────────────────────── */
+    .field-grid {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .field-grid.cols-1 { grid-template-columns: 1fr; }
+    .field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .field {
+      padding: 9px 11px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+    }
+    /* Right border removal */
+    .field-grid:not(.cols-1):not(.cols-3) .field:nth-child(2n)      { border-right: none; }
+    .field-grid.cols-3                    .field:nth-child(3n)      { border-right: none; }
+    .field-grid.cols-1                    .field                    { border-right: none; }
+
+    /* Full-width span */
+    .field.span-full {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
+
+    /* Shaded alternate rows */
+    .field.shaded { background: var(--surface); }
+
+    /* Last-row border-bottom removal — handled inline with .field-last class */
+    .field.field-last { border-bottom: none; }
+
+    .field-label {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .field-value {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TABLES
+    ═══════════════════════════════════════════════════════ */
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .stakeholder-count {
+      display: inline-block;
+      margin-left: 8px;
+      background: var(--brand);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 1px 7px;
+      vertical-align: middle;
+    }
+
+    table.sh-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table.sh-table thead tr {
+      background: var(--brand);
+    }
+    table.sh-table thead th {
+      padding: 7px 9px;
+      text-align: left;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: white;
+      white-space: nowrap;
+    }
+
+    table.sh-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+    table.sh-table tbody tr:last-child { border-bottom: none; }
+    table.sh-table tbody tr:nth-child(odd)  { background: var(--white); }
+    table.sh-table tbody tr:nth-child(even) { background: var(--surface); }
+
+    table.sh-table tbody td {
+      padding: 7px 9px;
+      vertical-align: middle;
+      color: var(--text-primary);
+      font-size: 11px;
+    }
+    table.sh-table tbody td.col-email {
+      font-size: 11px;
+      color: var(--brand-dark);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       DOCUMENT FOOTER
+    ═══════════════════════════════════════════════════════ */
+    .doc-footer {
+      background: var(--surface);
+      border-top: 2px solid var(--border);
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .footer-left {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .footer-left strong {
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+    .footer-right {
+      text-align: right;
+      flex-shrink: 0;
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .footer-right strong {
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+    @media print {
+      html { font-size: 11px; }
+      .page { margin: 0; max-width: 100%; }
+      .doc-header { padding: 16px 18px 14px; }
+      .retention-notice { padding: 6px 18px; }
+      .doc-body { padding: 16px 18px 18px; }
+      .section { margin-bottom: 14px; }
+      .field { padding: 6px 8px; }
+      table.sh-table thead th { padding: 6px 7px; }
+      table.sh-table tbody td { padding: 6px 7px; }
+      .doc-footer { padding: 8px 18px; }
+      .header-side-meta { gap: 4px; }
+      .header-generated-date, .footer-right { font-size: 9px; }
+    }
+
+    /* ── Page-break helpers ───────────────────────────── */
+    .no-break { page-break-inside: avoid; break-inside: avoid; }
+    .break-before { page-break-before: always; break-before: page; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- DOCUMENT HEADER -->
+  <div class="doc-header">
+    <div class="header-single-row">
+      <div class="header-brand">
+        <div class="header-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="4" fill="rgb(169,29,65)"/>
+            <rect x="7" y="8"  width="18" height="3" rx="1.5" fill="white"/>
+            <rect x="7" y="14" width="13" height="3" rx="1.5" fill="white"/>
+            <rect x="7" y="20" width="18" height="3" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="header-org-label">CIBC &nbsp;·&nbsp; Enterprise Data Management</div>
+          <div class="header-app-name">Data Role Repository</div>
+          <div class="header-record-name">@{variables('DRR')?['applicationName']}</div>
+        </div>
+      </div>
+
+      <div class="header-side-meta">
+        <div class="retention-badge">
+          <span class="retention-badge-label">Retention Period</span>
+          <span class="retention-badge-years">7</span>
+          <span class="retention-badge-years-suffix">Years</span>
+        </div>
+        <div class="header-generated-date">Generated: @{formatDateTime(utcNow(), 'MMMM d, yyyy')}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RETENTION NOTICE -->
+  <div class="retention-notice">
+    <span class="retention-notice-icon">&#128274;</span>
+    <span class="retention-notice-text">
+      <strong>Mandatory Retention Notice:</strong>&nbsp;
+      This document is subject to a <strong>7-year</strong> mandatory retention schedule in accordance with
+      CIBC Enterprise Data Management policies and applicable regulatory requirements.
+      Do not destroy before the retention expiry date noted in the footer.
+      Classification: <strong>Internal / Confidential</strong>.
+    </span>
+  </div>
+
+  <!-- DOCUMENT BODY -->
+  <div class="doc-body">
+
+    <!-- Section 1: Application Details -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128196;</div>
+        <span class="section-title">Application Details</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Application Name</div>
+          <div class="field-value">@{variables('DRR')?['applicationName']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">DRR Number</div>
+          <div class="field-value">@{variables('DRR')?['drrNumber']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">MAP ID</div>
+          <div class="field-value">@{variables('DRR')?['mapId']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Data Domain</div>
+          <div class="field-value">@{variables('DRR')?['dataDomain']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Application In-Scope?</div>
+          <div class="field-value">@{variables('DRR')?['applicationinScope']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Application Type</div>
+          <div class="field-value">@{variables('DRR')?['applicationType']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Data Asset Name</div>
+          <div class="field-value">@{variables('DRR')?['dataAssetName']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Governance Status</div>
+          <div class="field-value">TBD</div>
+        </div>
+
+        <div class="field span-full field-last">
+          <div class="field-label">Exclusion Reason</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['exclusionReason']), '&#8212;', variables('DRR')?['exclusionReason'])}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 2: Organizational Classification -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#127970;</div>
+        <span class="section-title">Organizational Classification</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Line of Business (LOB)</div>
+          <div class="field-value">@{variables('DRR')?['lob']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Organizational Spoke</div>
+          <div class="field-value">@{variables('DRR')?['organizationalSpoke']}</div>
+        </div>
+
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Spoke Segment</div>
+          <div class="field-value">@{variables('DRR')?['spokeSegment']}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 3: Record Metadata -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#9881;</div>
+        <span class="section-title">Record Metadata</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Created From</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdFrom']), '&#8212;', variables('DRR')?['createdFrom'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Role Repository GUID</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['applicationRepositoryId']), '&#8212;', variables('DRR')?['applicationRepositoryId'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Created On</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdOn']), '&#8212;', variables('DRR')?['createdOn'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified On</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['modifiedOn']), '&#8212;', variables('DRR')?['modifiedOn'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Created By</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdBy']), '&#8212;', variables('DRR')?['createdBy'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Created By Email</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['createdByEmail']), '&#8212;', variables('DRR')?['createdByEmail'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified By</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['modifiedBy']), '&#8212;', variables('DRR')?['modifiedBy'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified By Email</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['modifiedByEmail']), '&#8212;', variables('DRR')?['modifiedByEmail'])}</div>
+        </div>
+
+        <div class="field span-full" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">SPO ID (Legacy)</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['spoIdOld']), '&#8212;', variables('DRR')?['spoIdOld'])}</div>
+        </div>
+
+        <div class="field shaded" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Creation Date</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalCreationDate']), '&#8212;', variables('DRR')?['originalCreationDate'])}</div>
+        </div>
+
+        <div class="field shaded" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Modified Date</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalModifiedDate']), '&#8212;', variables('DRR')?['originalModifiedDate'])}</div>
+        </div>
+
+        <div class="field" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Created By</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalCreatedBy']), '&#8212;', variables('DRR')?['originalCreatedBy'])}</div>
+        </div>
+
+        <div class="field field-last" style="@{if(equals(toLower(coalesce(variables('DRR')?['createdFrom'], '')), 'dataverse'), 'display:none;', '')}">
+          <div class="field-label">Original Created By Email</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['originalCreatedByEmail']), '&#8212;', variables('DRR')?['originalCreatedByEmail'])}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 4: Related Roles & Stakeholders -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128101;</div>
+        <span class="section-title">
+          Related Roles &amp; Stakeholders
+          <span class="stakeholder-count">@{length(body('Filter_array_Stakeholders'))}</span>
+        </span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="sh-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Role</th>
+              <th style="width:28%">Stakeholder Name</th>
+              <th style="width:30%">Email Address</th>
+              <th>Access</th>
+            </tr>
+          </thead>
+          <tbody>
+              @{if(equals(length(body('Filter_array_Stakeholders')), 0), '<tr><td colspan="4" style="text-align:center;color:#6b7280;font-style:italic;">No stakeholder records available.</td></tr>', join(body('Select_StakeholderRows'), ''))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section 5: Record Audit Information -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128337;</div>
+        <span class="section-title">
+          Record Audit Information
+          <span class="stakeholder-count">@{length(body('Select_EventTrackers'))}</span>
+        </span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="sh-table">
+          <thead>
+            <tr>
+              <th style="width:12%">Action</th>
+              <th style="width:20%">Affected Role</th>
+              <th style="width:20%">Previous Stakeholder</th>
+              <th style="width:20%">New Stakeholder</th>
+              <th style="width:14%">Performed By</th>
+              <th style="width:14%">Performed On</th>
+            </tr>
+          </thead>
+          <tbody>
+            @{if(equals(length(body('Select_EventTrackers')), 0), '<tr><td colspan="6" style="text-align:center;color:#6b7280;font-style:italic;">No audit records available.</td></tr>', join(body('Select_EventTrackerRows'), ''))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DOCUMENT FOOTER -->
+  <div class="doc-footer">
+    <div class="footer-left">
+      <strong>CIBC &mdash; Canadian Imperial Bank of Commerce</strong><br>
+      Enterprise Data Management &nbsp;&middot;&nbsp; EDM&#8209;Tools Platform &nbsp;&middot;&nbsp; Data Role Repository
+    </div>
+    <div class="footer-right">
+      Classification: <strong>Internal / Confidential</strong>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

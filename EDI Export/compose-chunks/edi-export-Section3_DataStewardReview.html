@@ -1,0 +1,31 @@
+    <!-- Section 3: Data Steward Review -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128101;</div>
+        <span class="section-title">Data Steward Review</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Data Steward</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataSteward']), '&#8212;', variables('REC')?['dataSteward'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Steward Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataStewardEmail']), '&#8212;', variables('REC')?['dataStewardEmail'])}</div>
+        </div>
+
+        <div class="field shaded span-full">
+          <div class="field-label">In Review with Data Steward</div>
+          <div class="field-value">@{if(empty(variables('REC')?['inReviewWIthDataSteward']), '&#8212;', formatDateTime(variables('REC')?['inReviewWIthDataSteward'], 'MMMM d, yyyy'))}</div>
+        </div>
+
+        <div class="field span-full field-last">
+          <div class="field-label">Preliminary Root Cause Analysis</div>
+          <div class="field-value">@{if(empty(variables('REC')?['preliminaryRootCauseAnalysis']), '&#8212;', variables('REC')?['preliminaryRootCauseAnalysis'])}</div>
+        </div>
+
+      </div>
+    </div>

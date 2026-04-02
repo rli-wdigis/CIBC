@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Sharing Agreement — Agreement Record | CIBC</title>
+  <style>
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 12px; }
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      background: #e8eaed;
+      color: #111827;
+      line-height: 1.4;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Color Tokens ───────────────────────────────────────── */
+    :root {
+      --brand:          rgb(169, 29, 65);
+      --brand-dark:     rgb(118, 18, 44);
+      --brand-light:    rgb(208, 55, 93);
+      --brand-subtle:   rgba(169, 29, 65, 0.06);
+      --brand-border:   rgba(169, 29, 65, 0.16);
+      --text-primary:   #111827;
+      --text-secondary: #374151;
+      --text-muted:     #9ca3af;
+      --border:         #e5e7eb;
+      --surface:        #f9fafb;
+      --white:          #ffffff;
+    }
+
+    /* ── Page Wrapper ──────────────────────────────────────── */
+    .page {
+      max-width: 820px;
+      margin: 20px auto;
+      background: var(--white);
+      box-shadow: 0 6px 48px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    }
+    @media print {
+      body  { background: white; }
+      .page { max-width: 100%; margin: 0; box-shadow: none; }
+    }
+    @page {
+      size: A4;
+      margin: 10mm 10mm 10mm 10mm;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       DOCUMENT HEADER
+    ═══════════════════════════════════════════════════════ */
+    .doc-header {
+      background: linear-gradient(148deg, var(--brand-dark) 0%, var(--brand) 52%, var(--brand-light) 100%);
+      padding: 22px 28px 18px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .doc-header::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -30px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .doc-header::after {
+      content: '';
+      position: absolute;
+      bottom: -70px; right: 100px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .header-single-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-logo {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.22);
+    }
+    .header-logo svg { display: block; }
+    .header-org-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.58);
+      margin-bottom: 4px;
+    }
+    .header-app-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+    }
+    .header-record-name {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+    }
+    .header-status-badge {
+      display: inline-block;
+      margin-left: 8px;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: white;
+      vertical-align: middle;
+    }
+    .retention-badge {
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.13);
+      border: 1.5px solid rgba(255,255,255,0.28);
+      border-radius: 8px;
+      padding: 7px 14px;
+      text-align: center;
+    }
+    .retention-badge-label {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.58);
+      margin-bottom: 3px;
+    }
+    .retention-badge-years {
+      display: block;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .retention-badge-years-suffix {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.7);
+      margin-top: 2px;
+    }
+    .header-side-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .header-generated-date {
+      font-size: 9px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RETENTION NOTICE BAND
+    ═══════════════════════════════════════════════════════ */
+    .retention-notice {
+      background: var(--brand-subtle);
+      border-bottom: 1px solid var(--brand-border);
+      padding: 8px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .retention-notice-icon {
+      font-size: 15px;
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+    .retention-notice-text {
+      font-size: 10px;
+      color: var(--brand-dark);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .retention-notice-text strong { font-weight: 800; }
+
+    /* ═══════════════════════════════════════════════════════
+       DOCUMENT BODY
+    ═══════════════════════════════════════════════════════ */
+    .doc-body {
+      padding: 22px 28px 28px;
+    }
+
+    /* ── Section Block ──────────────────────────────────── */
+    .section {
+      margin-bottom: 20px;
+    }
+    .section:last-child { margin-bottom: 0; }
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      border-bottom: 2px solid var(--brand);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    .section-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .section-header-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .section-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--brand);
+    }
+    .section-subtitle {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--text-muted);
+      font-style: italic;
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 1.3;
+    }
+
+    /* ── Field Grid (CSS Grid) ──────────────────────────── */
+    .field-grid {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .field-grid.cols-1 { grid-template-columns: 1fr; }
+    .field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .field {
+      padding: 9px 11px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+    }
+    .field-grid:not(.cols-1):not(.cols-3) .field:nth-child(2n) { border-right: none; }
+    .field-grid.cols-3                    .field:nth-child(3n) { border-right: none; }
+    .field-grid.cols-1                    .field               { border-right: none; }
+
+    .field.span-full {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
+    .field.shaded { background: var(--surface); }
+    .field.field-last { border-bottom: none; }
+
+    .field-label {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .field-value {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TABLES (notes)
+    ═══════════════════════════════════════════════════════ */
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .stakeholder-count {
+      display: inline-block;
+      margin-left: 8px;
+      background: var(--brand);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 1px 7px;
+      vertical-align: middle;
+    }
+    table.sh-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table.sh-table thead tr { background: var(--brand); }
+    table.sh-table thead th {
+      padding: 7px 9px;
+      text-align: left;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: white;
+      white-space: nowrap;
+    }
+    table.sh-table tbody tr { border-bottom: 1px solid var(--border); }
+    table.sh-table tbody tr:last-child { border-bottom: none; }
+    table.sh-table tbody tr:nth-child(odd)  { background: var(--white); }
+    table.sh-table tbody tr:nth-child(even) { background: var(--surface); }
+    table.sh-table tbody td {
+      padding: 7px 9px;
+      vertical-align: top;
+      color: var(--text-primary);
+      font-size: 11px;
+    }
+
+    /* ── Notes Timeline ─────────────────────────────────── */
+    table.sh-table.notes-table tbody tr {
+      border-left: 3px solid var(--brand);
+    }
+    table.sh-table.notes-table td.note-created,
+    table.sh-table.notes-table td.note-modified-col {
+      border-right: 1px solid var(--border);
+      width: 20%;
+      vertical-align: top;
+    }
+    table.sh-table.notes-table td.note-text {
+      line-height: 1.55;
+      font-size: 11px;
+    }
+    table.sh-table.notes-table td.note-text * {
+      font-size: 11px !important;
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+      line-height: 1.55 !important;
+    }
+    .note-col-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .note-date {
+      font-weight: 700;
+      color: var(--brand-dark);
+    }
+    .note-by {
+      font-size: 10px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .note-email {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       DOCUMENT FOOTER
+    ═══════════════════════════════════════════════════════ */
+    .doc-footer {
+      background: var(--surface);
+      border-top: 2px solid var(--border);
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .footer-left {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .footer-left strong {
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+    .footer-right {
+      text-align: right;
+      flex-shrink: 0;
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .footer-right strong {
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+
+    @media print {
+      html { font-size: 11px; }
+      .page { margin: 0; max-width: 100%; }
+      .doc-header { padding: 16px 18px 14px; }
+      .retention-notice { padding: 6px 18px; }
+      .doc-body { padding: 16px 18px 18px; }
+      .section { margin-bottom: 14px; }
+      .field { padding: 6px 8px; }
+      table.sh-table thead th { padding: 6px 7px; }
+      table.sh-table tbody td { padding: 6px 7px; }
+      .doc-footer { padding: 8px 18px; }
+      .header-side-meta { gap: 4px; }
+      .header-generated-date, .footer-right { font-size: 9px; }
+    }
+
+    /* ── Page-break helpers ───────────────────────────── */
+    .no-break { page-break-inside: avoid; break-inside: avoid; }
+    .break-before { page-break-before: always; break-before: page; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- DOCUMENT HEADER -->
+  <div class="doc-header">
+    <div class="header-single-row">
+      <div class="header-brand">
+        <div class="header-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="4" fill="rgb(169,29,65)"/>
+            <rect x="7" y="8"  width="18" height="3" rx="1.5" fill="white"/>
+            <rect x="7" y="14" width="13" height="3" rx="1.5" fill="white"/>
+            <rect x="7" y="20" width="18" height="3" rx="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="header-org-label">CIBC &nbsp;·&nbsp; Enterprise Data Management</div>
+          <div class="header-app-name">Data Sharing Agreement</div>
+          <div class="header-record-name">@{variables('REC')?['dsaNumber']} <span class="header-status-badge">@{if(empty(variables('REC')?['dsaStatus']), 'Unknown', variables('REC')?['dsaStatus'])}</span></div>
+        </div>
+      </div>
+
+      <div class="header-side-meta">
+        <div class="retention-badge">
+          <span class="retention-badge-label">Retention Period</span>
+          <span class="retention-badge-years">7</span>
+          <span class="retention-badge-years-suffix">Years</span>
+        </div>
+        <div class="header-generated-date">Generated: @{formatDateTime(utcNow(), 'MMMM d, yyyy')}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RETENTION NOTICE -->
+  <div class="retention-notice">
+    <span class="retention-notice-icon">&#128274;</span>
+    <span class="retention-notice-text">
+      <strong>Mandatory Retention Notice:</strong>&nbsp;
+      This document is subject to a <strong>7-year</strong> mandatory retention schedule in accordance with
+      CIBC Enterprise Data Management policies and applicable regulatory requirements.
+      Do not destroy before the retention expiry date noted in the footer.
+      Classification: <strong>Internal / Confidential</strong>.
+    </span>
+  </div>
+
+  <!-- DOCUMENT BODY -->
+  <div class="doc-body">
+
+    <!-- Section 1: DSA Overview -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128203;</div>
+        <span class="section-title">DSA Overview</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field field-last">
+          <div class="field-label">Is this request for access or sharing structured data?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['isStructuredDataRequest']), '&#8212;', variables('REC')?['isStructuredDataRequest'])}</div>
+        </div>
+
+        <div class="field field-last">
+          <div class="field-label">Is this request for authorization to use structured data for another purpose than originally intended?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['isThisAuthorizationForOtherPurpose']), '&#8212;', variables('REC')?['isThisAuthorizationForOtherPurpose'])}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 2: Linked Application (DRR) -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128196;</div>
+        <span class="section-title">Linked Application</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Application Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['applicationName']), '&#8212;', variables('REC')?['applicationName'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">DRR Number</div>
+          <div class="field-value">@{if(empty(variables('REC')?['drrNumber']), '&#8212;', variables('REC')?['drrNumber'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Application Type</div>
+          <div class="field-value">@{if(empty(variables('REC')?['applicationType']), '&#8212;', variables('REC')?['applicationType'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Application In-Scope?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['applicationinScope']), '&#8212;', variables('REC')?['applicationinScope'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Line of Business (LOB)</div>
+          <div class="field-value">@{if(empty(variables('REC')?['lob']), '&#8212;', variables('REC')?['lob'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">MAP ID</div>
+          <div class="field-value">@{if(empty(variables('REC')?['mapId']), '&#8212;', variables('REC')?['mapId'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Organizational Spoke</div>
+          <div class="field-value">@{if(empty(variables('REC')?['organizationalSpoke']), '&#8212;', variables('REC')?['organizationalSpoke'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Spoke Segment</div>
+          <div class="field-value">@{if(empty(variables('REC')?['spokeSegment']), '&#8212;', variables('REC')?['spokeSegment'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Asset Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataAssetName']), '&#8212;', variables('REC')?['dataAssetName'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Domain</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataDomain']), '&#8212;', variables('REC')?['dataDomain'])}</div>
+        </div>
+
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Exclusion Reason</div>
+          <div class="field-value">@{if(empty(variables('REC')?['exclusionReason']), '&#8212;', variables('REC')?['exclusionReason'])}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 3: Data Consumer Details -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128101;</div>
+        <div class="section-header-text">
+          <span class="section-title">DSA Details</span>
+          <span class="section-subtitle">To be Completed by Data Consumer or on behalf of the Data Consumer</span>
+        </div>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Row 1 – unshaded, full-width -->
+        <div class="field span-full">
+          <div class="field-label">Data Consumer</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataConsumer']), '&#8212;', variables('REC')?['dataConsumer'])}</div>
+        </div>
+
+        <!-- Row 2 – shaded -->
+        <div class="field shaded">
+          <div class="field-label">Point of Contact Information</div>
+          <div class="field-value">@{if(empty(variables('REC')?['pointOfContactInformation']), '&#8212;', variables('REC')?['pointOfContactInformation'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Data Source Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataSourceName']), '&#8212;', variables('REC')?['dataSourceName'])}</div>
+        </div>
+
+        <!-- Row 3 – unshaded -->
+        <div class="field">
+          <div class="field-label">Where will the data be stored?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataStorageLocation']), '&#8212;', variables('REC')?['dataStorageLocation'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">How will the data be accessed?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataAccessMethod']), '&#8212;', variables('REC')?['dataAccessMethod'])}</div>
+        </div>
+
+        <!-- Row 4 – shaded, span-full -->
+        <div class="field shaded span-full">
+          <div class="field-label">Are there any associated access controls? If yes, please provide details</div>
+          <div class="field-value">@{if(empty(variables('REC')?['associatedAccessControls']), '&#8212;', variables('REC')?['associatedAccessControls'])}</div>
+        </div>
+
+        <!-- Row 5 – unshaded -->
+        <div class="field">
+          <div class="field-label">CIRA ID</div>
+          <div class="field-value">@{if(empty(variables('REC')?['ciraId']), '&#8212;', variables('REC')?['ciraId'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">What is the usage and intent for the data being shared?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['usageAndIntent']), '&#8212;', variables('REC')?['usageAndIntent'])}</div>
+        </div>
+
+        <!-- Row 6 – shaded -->
+        <div class="field shaded">
+          <div class="field-label">Legal Entity Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['legalEntityName']), '&#8212;', variables('REC')?['legalEntityName'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Tech Triage ID</div>
+          <div class="field-value">@{if(empty(variables('REC')?['techTriageId']), '&#8212;', variables('REC')?['techTriageId'])}</div>
+        </div>
+
+        <!-- Row 7 – unshaded, span-full -->
+        <div class="field span-full">
+          <div class="field-label">Please identify the Team(s), AD Group(s) or individual with whom the data will be shared</div>
+          <div class="field-value">@{if(empty(variables('REC')?['teamsoradgroupstosharewith']), '&#8212;', variables('REC')?['teamsoradgroupstosharewith'])}</div>
+        </div>
+
+        <!-- Row 8 – shaded, span-full -->
+        <div class="field shaded span-full">
+          <div class="field-label">Name(s) of Physical Data Elements Requested</div>
+          <div class="field-value">@{if(empty(variables('REC')?['physicalDataElementsRequested']), '&#8212;', variables('REC')?['physicalDataElementsRequested'])}</div>
+        </div>
+
+        <!-- Row 9 – unshaded, last row -->
+        <div class="field field-last">
+          <div class="field-label">How will the data be disposed after use?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataDisposalMethod']), '&#8212;', variables('REC')?['dataDisposalMethod'])}</div>
+        </div>
+
+        <div class="field field-last">
+          <div class="field-label">Agreement End Date</div>
+          <div class="field-value">@{if(empty(variables('REC')?['agreementEndDate']), '&#8212;', formatDateTime(variables('REC')?['agreementEndDate'], 'MMMM d, yyyy'))}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 4: Data Steward Review -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128101;</div>
+        <div class="section-header-text">
+          <span class="section-title">Data Steward Review</span>
+          <span class="section-subtitle">To be completed by Data Consumer with assistance from the Data Steward of the Identified Data Source</span>
+        </div>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Row 1 – unshaded, span-full -->
+        <div class="field span-full">
+          <div class="field-label">Are there any usage restrictions for the data being requested (3rd party contractual restrictions, etc.)</div>
+          <div class="field-value">@{if(empty(variables('REC')?['areThereAnyUsageRestrictions']), '&#8212;', variables('REC')?['areThereAnyUsageRestrictions'])}</div>
+        </div>
+
+        <!-- Row 2 – shaded pair -->
+        <div class="field shaded">
+          <div class="field-label">Does the requested data include PI (Personal Information)?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['doesDataIncludePI']), '&#8212;', variables('REC')?['doesDataIncludePI'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Does the requested data include Confidential or Restricted Information?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['doesDataIncludeConfidentialOrRestrictedInformation']), '&#8212;', variables('REC')?['doesDataIncludeConfidentialOrRestrictedInformation'])}</div>
+        </div>
+
+        <!-- Row 3 – unshaded pair -->
+        <div class="field">
+          <div class="field-label">Does the requested data include vendor/third party data?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['doesDataIncludeVendorOrThirdPartyData']), '&#8212;', variables('REC')?['doesDataIncludeVendorOrThirdPartyData'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Will the sensitive and PI data be de-identified before being shared?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['willDataBeDeidentifiedBeforeSharing']), '&#8212;', variables('REC')?['willDataBeDeidentifiedBeforeSharing'])}</div>
+        </div>
+
+        <!-- Row 4 – shaded, span-full, last -->
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Mailbox To Be Notified</div>
+          <div class="field-value">@{if(empty(variables('REC')?['mailboxToBeNotified']), '&#8212;', variables('REC')?['mailboxToBeNotified'])}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 5: Stakeholder's Decision -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#9989;</div>
+        <span class="section-title">Stakeholder&#8217;s Decision</span>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Row 1 – unshaded pair -->
+        <div class="field">
+          <div class="field-label">Data Consumer&#8217;s Decision</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataConsumerDecision']), '&#8212;', variables('REC')?['dataConsumerDecision'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Steward&#8217;s Decision</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataStewardDecision']), '&#8212;', variables('REC')?['dataStewardDecision'])}</div>
+        </div>
+
+        <!-- Row 2 – shaded, span-full -->
+        <div class="field shaded span-full">
+          <div class="field-label">Data Owner&#8217;s Decision</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataOwnerDecision']), '&#8212;', variables('REC')?['dataOwnerDecision'])}</div>
+        </div>
+
+        <!-- Row 3 – unshaded, span-full -->
+        <div class="field span-full">
+          <div class="field-label">Reviewer Comments</div>
+          <div class="field-value">@{if(empty(variables('REC')?['reviewerComments']), '&#8212;', variables('REC')?['reviewerComments'])}</div>
+        </div>
+
+        <!-- Row 4 – shaded, span-full, last -->
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Additional Comments</div>
+          <div class="field-value">@{if(empty(variables('REC')?['additionalComments']), '&#8212;', variables('REC')?['additionalComments'])}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 6: DSA Notes -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128221;</div>
+        <span class="section-title">
+          DSA Notes
+          <span class="stakeholder-count">@{length(variables('Notes'))}</span>
+        </span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="sh-table notes-table">
+          <thead>
+            <tr>
+              <th style="width:20%">Created</th>
+              <th style="width:20%">Modified</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            @{if(equals(length(variables('Notes')), 0), '<tr><td colspan="3" style="text-align:center;color:#6b7280;font-style:italic;padding:12px;">No notes recorded.</td></tr>', join(body('Select_NoteRows'), ''))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section 7: Record Metadata -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#9881;</div>
+        <span class="section-title">Record Metadata</span>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Row 1 – shaded pair (dates) -->
+        <div class="field shaded">
+          <div class="field-label">Created On</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdOn']), '&#8212;', formatDateTime(variables('REC')?['createdOn'], 'MMMM d, yyyy h:mm tt'))}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified On</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedOn']), '&#8212;', formatDateTime(variables('REC')?['modifiedOn'], 'MMMM d, yyyy h:mm tt'))}</div>
+        </div>
+
+        <!-- Row 3 – unshaded pair (people) -->
+        <div class="field">
+          <div class="field-label">Created By</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdBy']), '&#8212;', variables('REC')?['createdBy'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Created By Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdByEmail']), '&#8212;', variables('REC')?['createdByEmail'])}</div>
+        </div>
+
+        <!-- Row 4 – shaded pair, last row -->
+        <div class="field shaded field-last">
+          <div class="field-label">Last Modified By</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedBy']), '&#8212;', variables('REC')?['modifiedBy'])}</div>
+        </div>
+
+        <div class="field shaded field-last">
+          <div class="field-label">Last Modified By Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedByEmail']), '&#8212;', variables('REC')?['modifiedByEmail'])}</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DOCUMENT FOOTER -->
+  <div class="doc-footer">
+    <div class="footer-left">
+      <strong>CIBC &mdash; Canadian Imperial Bank of Commerce</strong><br>
+      Enterprise Data Management &nbsp;&middot;&nbsp; EDM&#8209;Tools Platform &nbsp;&middot;&nbsp; Data Sharing Agreement
+    </div>
+    <div class="footer-right">
+      Classification: <strong>Internal / Confidential</strong>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+function onLoad(executionContext) {
+
+    var formContext = executionContext.getFormContext();
+
+    // Remove first to prevent duplicate registration on reload
+    formContext.data.entity.removeOnSave(onFormSave);
+    formContext.data.entity.addOnSave(onFormSave);
+
+    // *** Bind edm_mapid field to restrict to numbers only ***
+    var mapIdAttr = formContext.getAttribute('edm_mapid');
+    if (mapIdAttr) {
+        mapIdAttr.addOnChange(restrictToNumbersOnly);
+    }
+
+    // *** edm_governancestatus is always mandatory ***
+    var govStatusAttr = formContext.getAttribute('edm_governancestatus');
+    if (govStatusAttr) {
+        govStatusAttr.setRequiredLevel('required');
+        govStatusAttr.addOnChange(onGovernanceStatusChange);
+    }
+
+    // *** Apply conditional requirement for edm_exclusionreason on load ***
+    onGovernanceStatusChange(executionContext);
+
+    // *** Load stakeholders HTML web resource ***
+    loadStakeholdersWebResource(formContext);
+}
+
+// ─── Stakeholders Web Resource ────────────────────────────────────────────────
+
+async function loadStakeholdersWebResource(formContext) {
+    const iframeControl = formContext.ui.controls.get("WebResource_StakeholdersAsText");
+
+    if (!iframeControl) {
+        console.warn("[loadStakeholdersWebResource] Control 'WebResource_StakeholdersAsText' not found on this form.");
+        return;
+    }
+
+    const contentWindow = await iframeControl.getContentWindow();
+
+    function waitForLoad() {
+        if (typeof contentWindow.renderStakeholders === "function") {
+            const attr = formContext.getAttribute("edm_stakeholderstext");
+
+            if (!attr) {
+                console.warn("[loadStakeholdersWebResource] Column 'edm_stakeholderstext' not found on this form. Make sure it is added to the form (can be hidden).");
+                contentWindow.renderStakeholders(null);
+                return;
+            }
+
+            const jsonText = attr.getValue();
+            contentWindow.renderStakeholders(jsonText);
+        } else {
+            setTimeout(waitForLoad, 100);
+        }
+    }
+    waitForLoad();
+
+    // Live refresh if the column value changes
+    const attr = formContext.getAttribute("edm_stakeholderstext");
+    if (attr) {
+        attr.addOnChange(async () => {
+            const cw = await iframeControl.getContentWindow();
+            const updated = formContext.getAttribute("edm_stakeholderstext").getValue();
+            cw.renderStakeholders(updated);
+        });
+    }
+}
+
+// ─── Governance Status Change ─────────────────────────────────────────────────
+
+function onGovernanceStatusChange(executionContext) {
+    var formContext = executionContext.getFormContext();
+
+    var govStatusAttr = formContext.getAttribute('edm_governancestatus');
+    var exclusionReasonAttr = formContext.getAttribute('edm_exclusionreason');
+
+    if (!govStatusAttr || !exclusionReasonAttr) return;
+
+    // var value = govStatusAttr.getValue();
+    // // 784940000 = Not Assessed, 784940001 = Out of Scope
+    // var requiresReason = (value === 784940000 || value === 784940001);
+    // exclusionReasonAttr.setRequiredLevel(requiresReason ? 'required' : 'none');
+
+    // *** edm_exclusionreason is always mandatory ***
+    exclusionReasonAttr.setRequiredLevel('required');
+}
+
+// ─── On Form Save ─────────────────────────────────────────────────────────────
+
+function onFormSave(executionContext) {
+    const formContext = executionContext.getFormContext();
+    const formType = formContext.ui.getFormType();
+
+    // Only execute on Update forms (formType 2)
+    if (formType !== 2) return;
+
+    // *** Validate edm_governancestatus is filled ***
+    const govStatusAttr = formContext.getAttribute('edm_governancestatus');
+    if (govStatusAttr && govStatusAttr.getValue() === null) {
+        formContext.ui.setFormNotification(
+            'Governance Status is required before saving.',
+            'ERROR',
+            'govstatus_required'
+        );
+        executionContext.getEventArgs().preventDefault();
+        return;
+    } else {
+        formContext.ui.clearFormNotification('govstatus_required');
+    }
+
+    // *** Validate edm_exclusionreason (always required) ***
+    // const govStatusValue = govStatusAttr ? govStatusAttr.getValue() : null;
+    const exclusionReasonAttr = formContext.getAttribute('edm_exclusionreason');
+    if (
+        // (govStatusValue === 784940000 || govStatusValue === 784940001) &&
+        exclusionReasonAttr &&
+        (exclusionReasonAttr.getValue() === null || exclusionReasonAttr.getValue().trim() === '')
+    ) {
+        formContext.ui.setFormNotification(
+            'Exclusion Reason is required when Governance Status is Not Assessed or Out of Scope.',
+            'ERROR',
+            'exclusionreason_required'
+        );
+        executionContext.getEventArgs().preventDefault();
+        return;
+    } else {
+        formContext.ui.clearFormNotification('edm_exclusionreason');
+    }
+
+    const triggerAttr = formContext.getAttribute('edm_triggerflow');
+
+    if (!triggerAttr) {
+        console.warn('[onFormSave] edm_triggerflow attribute not found on this form.');
+        return;
+    }
+
+    triggerAttr.setValue('SyncToSPO');
+}
+
+// ─── Restrict Map ID to Numbers Only ─────────────────────────────────────────
+
+function restrictToNumbersOnly(executionContext) {
+    var formContext = executionContext.getFormContext();
+    var field = formContext.getAttribute("edm_mapid");
+
+    if (field != null) {
+        var value = field.getValue();
+
+        if (value != null && value != "") {
+            var numericValue = value.replace(/[^0-9]/g, "");
+
+            if (numericValue !== value) {
+                field.setValue(numericValue);
+
+                formContext.ui.setFormNotification(
+                    "Only numbers are allowed in Map ID field.",
+                    "WARNING",
+                    "mapid_validation"
+                );
+
+                setTimeout(function () {
+                    formContext.ui.clearFormNotification("mapid_validation");
+                }, 3000);
+            }
+        }
+    }
+}

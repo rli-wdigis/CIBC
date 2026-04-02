@@ -1,0 +1,61 @@
+    <!-- Section 5: Record Metadata -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#9881;</div>
+        <span class="section-title">Record Metadata</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Created By</div>
+          <div class="field-value">@{variables('REC')?['createdBy']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Created By Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdByEmail']), '&#8212;', variables('REC')?['createdByEmail'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Created On</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdOn']), '&#8212;', formatDateTime(variables('REC')?['createdOn'], 'MMMM d, yyyy h:mm tt'))}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified On</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedOn']), '&#8212;', formatDateTime(variables('REC')?['modifiedOn'], 'MMMM d, yyyy h:mm tt'))}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Last Modified By</div>
+          <div class="field-value">@{variables('REC')?['modifiedBy']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Last Modified By Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedByEmail']), '&#8212;', variables('REC')?['modifiedByEmail'])}</div>
+        </div>
+
+        <div class="field shaded" style="@{if(empty(variables('REC')?['spoId']), 'display:none;', '')}">
+          <div class="field-label">Original Created By</div>
+          <div class="field-value">@{if(empty(variables('REC')?['orginalCreatedBy']), '&#8212;', variables('REC')?['orginalCreatedBy'])}</div>
+        </div>
+
+        <div class="field shaded" style="@{if(empty(variables('REC')?['spoId']), 'display:none;', '')}">
+          <div class="field-label">Original Created By Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['originalCreatedByEmail']), '&#8212;', variables('REC')?['originalCreatedByEmail'])}</div>
+        </div>
+
+        <div class="field" style="@{if(empty(variables('REC')?['spoId']), 'display:none;', '')}">
+          <div class="field-label">Original Created On</div>
+          <div class="field-value">@{if(empty(variables('REC')?['originalCreatedOn']), '&#8212;', formatDateTime(variables('REC')?['originalCreatedOn'], 'MMMM d, yyyy'))}</div>
+        </div>
+
+        <div class="field field-last" style="@{if(empty(variables('REC')?['spoId']), 'display:none;', '')}">
+          <div class="field-label">SPO ID</div>
+          <div class="field-value">@{if(empty(variables('REC')?['spoId']), '&#8212;', variables('REC')?['spoId'])}</div>
+        </div>
+
+      </div>
+    </div>

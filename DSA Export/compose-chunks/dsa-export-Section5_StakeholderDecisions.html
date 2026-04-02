@@ -1,0 +1,40 @@
+    <!-- Section 5: Stakeholder's Decision -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#9989;</div>
+        <span class="section-title">Stakeholder&#8217;s Decision</span>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Row 1 – unshaded pair -->
+        <div class="field">
+          <div class="field-label">Data Consumer&#8217;s Decision</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataConsumerDecision']), '&#8212;', variables('REC')?['dataConsumerDecision'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Data Steward&#8217;s Decision</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataStewardDecision']), '&#8212;', variables('REC')?['dataStewardDecision'])}</div>
+        </div>
+
+        <!-- Row 2 – shaded, span-full (avoids half-empty cell) -->
+        <div class="field shaded span-full">
+          <div class="field-label">Data Owner&#8217;s Decision</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataOwnerDecision']), '&#8212;', variables('REC')?['dataOwnerDecision'])}</div>
+        </div>
+
+        <!-- Row 3 – unshaded, span-full -->
+        <div class="field span-full">
+          <div class="field-label">Reviewer Comments</div>
+          <div class="field-value">@{if(empty(variables('REC')?['reviewerComments']), '&#8212;', variables('REC')?['reviewerComments'])}</div>
+        </div>
+
+        <!-- Row 4 – shaded, span-full, last -->
+        <div class="field shaded span-full field-last">
+          <div class="field-label">Additional Comments</div>
+          <div class="field-value">@{if(empty(variables('REC')?['additionalComments']), '&#8212;', variables('REC')?['additionalComments'])}</div>
+        </div>
+
+      </div>
+    </div>

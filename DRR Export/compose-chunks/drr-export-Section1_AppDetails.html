@@ -1,0 +1,55 @@
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128196;</div>
+        <span class="section-title">Application Details</span>
+      </div>
+
+      <div class="field-grid">
+
+        <div class="field">
+          <div class="field-label">Application Name</div>
+          <div class="field-value">@{variables('DRR')?['applicationName']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">DRR Number</div>
+          <div class="field-value">@{variables('DRR')?['drrNumber']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">MAP ID</div>
+          <div class="field-value">@{variables('DRR')?['mapId']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Data Domain</div>
+          <div class="field-value">@{variables('DRR')?['dataDomain']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Application In-Scope?</div>
+          <div class="field-value">@{variables('DRR')?['applicationinScope']}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Application Type</div>
+          <div class="field-value">@{variables('DRR')?['applicationType']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Data Asset Name</div>
+          <div class="field-value">@{variables('DRR')?['dataAssetName']}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Governance Status</div>
+          <div class="field-value">TBD</div>
+        </div>
+
+        <div class="field span-full field-last">
+          <div class="field-label">Exclusion Reason</div>
+          <div class="field-value">@{if(empty(variables('DRR')?['exclusionReason']), '&#8212;', variables('DRR')?['exclusionReason'])}</div>
+        </div>
+
+      </div>
+    </div>

@@ -1,0 +1,44 @@
+    <!-- Section 7: Record Metadata -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#9881;</div>
+        <span class="section-title">Record Metadata</span>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Row 1 – shaded pair (dates) -->
+        <div class="field shaded">
+          <div class="field-label">Created On</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdOn']), '&#8212;', formatDateTime(variables('REC')?['createdOn'], 'MMMM d, yyyy h:mm tt'))}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Last Modified On</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedOn']), '&#8212;', formatDateTime(variables('REC')?['modifiedOn'], 'MMMM d, yyyy h:mm tt'))}</div>
+        </div>
+
+        <!-- Row 3 – unshaded pair (people) -->
+        <div class="field">
+          <div class="field-label">Created By</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdBy']), '&#8212;', variables('REC')?['createdBy'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Created By Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['createdByEmail']), '&#8212;', variables('REC')?['createdByEmail'])}</div>
+        </div>
+
+        <!-- Row 4 – shaded pair, last row -->
+        <div class="field shaded field-last">
+          <div class="field-label">Last Modified By</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedBy']), '&#8212;', variables('REC')?['modifiedBy'])}</div>
+        </div>
+
+        <div class="field shaded field-last">
+          <div class="field-label">Last Modified By Email</div>
+          <div class="field-value">@{if(empty(variables('REC')?['modifiedByEmail']), '&#8212;', variables('REC')?['modifiedByEmail'])}</div>
+        </div>
+
+      </div>
+    </div>

@@ -1,0 +1,25 @@
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128101;</div>
+        <span class="section-title">
+          Related Roles &amp; Stakeholders
+          <span class="stakeholder-count">@{length(body('Filter_array_Stakeholders'))}</span>
+        </span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="sh-table">
+          <thead>
+            <tr>
+              <th style="width:28%">Role</th>
+              <th style="width:28%">Stakeholder Name</th>
+              <th style="width:30%">Email Address</th>
+              <th>Access</th>
+            </tr>
+          </thead>
+          <tbody>
+              @{if(equals(length(body('Filter_array_Stakeholders')), 0), '<tr><td colspan="4" style="text-align:center;color:#6b7280;font-style:italic;">No stakeholder records available.</td></tr>', join(body('Select_StakeholderRows'), ''))}
+          </tbody>
+        </table>
+      </div>
+    </div>

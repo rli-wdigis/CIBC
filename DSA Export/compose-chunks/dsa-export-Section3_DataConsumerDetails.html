@@ -1,0 +1,93 @@
+    <!-- Section 3: Data Consumer Details -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">&#128101;</div>
+        <div class="section-header-text">
+          <span class="section-title">DSA Details</span>
+          <span class="section-subtitle">To be Completed by Data Consumer or on behalf of the Data Consumer</span>
+        </div>
+      </div>
+
+      <div class="field-grid">
+
+        <!-- Row 1 – unshaded, full-width -->
+        <div class="field span-full">
+          <div class="field-label">Data Consumer</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataConsumer']), '&#8212;', variables('REC')?['dataConsumer'])}</div>
+        </div>
+
+        <!-- Row 2 – shaded -->
+        <div class="field shaded">
+          <div class="field-label">Point of Contact Information</div>
+          <div class="field-value">@{if(empty(variables('REC')?['pointOfContactInformation']), '&#8212;', variables('REC')?['pointOfContactInformation'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Data Source Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataSourceName']), '&#8212;', variables('REC')?['dataSourceName'])}</div>
+        </div>
+
+        <!-- Row 3 – unshaded -->
+        <div class="field">
+          <div class="field-label">Where will the data be stored?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataStorageLocation']), '&#8212;', variables('REC')?['dataStorageLocation'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">How will the data be accessed?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataAccessMethod']), '&#8212;', variables('REC')?['dataAccessMethod'])}</div>
+        </div>
+
+        <!-- Row 4 – shaded, span-full -->
+        <div class="field shaded span-full">
+          <div class="field-label">Are there any associated access controls? If yes, please provide details</div>
+          <div class="field-value">@{if(empty(variables('REC')?['associatedAccessControls']), '&#8212;', variables('REC')?['associatedAccessControls'])}</div>
+        </div>
+
+        <!-- Row 5 – unshaded -->
+        <div class="field">
+          <div class="field-label">CIRA ID</div>
+          <div class="field-value">@{if(empty(variables('REC')?['ciraId']), '&#8212;', variables('REC')?['ciraId'])}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">What is the usage and intent for the data being shared?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['usageAndIntent']), '&#8212;', variables('REC')?['usageAndIntent'])}</div>
+        </div>
+
+        <!-- Row 6 – shaded -->
+        <div class="field shaded">
+          <div class="field-label">Legal Entity Name</div>
+          <div class="field-value">@{if(empty(variables('REC')?['legalEntityName']), '&#8212;', variables('REC')?['legalEntityName'])}</div>
+        </div>
+
+        <div class="field shaded">
+          <div class="field-label">Tech Triage ID</div>
+          <div class="field-value">@{if(empty(variables('REC')?['techTriageId']), '&#8212;', variables('REC')?['techTriageId'])}</div>
+        </div>
+
+        <!-- Row 7 – unshaded, span-full -->
+        <div class="field span-full">
+          <div class="field-label">Please identify the Team(s), AD Group(s) or individual with whom the data will be shared</div>
+          <div class="field-value">@{if(empty(variables('REC')?['teamsoradgroupstosharewith']), '&#8212;', variables('REC')?['teamsoradgroupstosharewith'])}</div>
+        </div>
+
+        <!-- Row 8 – shaded, span-full -->
+        <div class="field shaded span-full">
+          <div class="field-label">Name(s) of Physical Data Elements Requested</div>
+          <div class="field-value">@{if(empty(variables('REC')?['physicalDataElementsRequested']), '&#8212;', variables('REC')?['physicalDataElementsRequested'])}</div>
+        </div>
+
+        <!-- Row 9 – unshaded, last row -->
+        <div class="field field-last">
+          <div class="field-label">How will the data be disposed after use?</div>
+          <div class="field-value">@{if(empty(variables('REC')?['dataDisposalMethod']), '&#8212;', variables('REC')?['dataDisposalMethod'])}</div>
+        </div>
+
+        <div class="field field-last">
+          <div class="field-label">Agreement End Date</div>
+          <div class="field-value">@{if(empty(variables('REC')?['agreementEndDate']), '&#8212;', formatDateTime(variables('REC')?['agreementEndDate'], 'MMMM d, yyyy'))}</div>
+        </div>
+
+      </div>
+    </div>
