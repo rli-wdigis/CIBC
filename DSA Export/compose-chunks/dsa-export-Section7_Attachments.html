@@ -1,0 +1,14 @@
+    <!-- Section 7: Attachments -->
+    <div class="section no-break">
+      <div class="section-header">
+        <div class="section-icon">&#128206;</div>
+        <span class="section-title">
+          Attachments
+          <span class="stakeholder-count">@{length(body('Select_AttachmentRows'))}</span>
+        </span>
+      </div>
+
+      <div class="attach-list">
+        @{if(equals(length(body('Select_AttachmentRows')), 0), '<p class="attach-empty">No attachments on record.</p>', join(body('Select_AttachmentRows'), ''))}
+      </div>
+    </div>

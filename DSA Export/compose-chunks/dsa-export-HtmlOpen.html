@@ -399,6 +399,68 @@
     }
 
     /* ═══════════════════════════════════════════════════════
+       ATTACHMENTS
+    ═══════════════════════════════════════════════════════ */
+    .attach-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      min-height: 46px;
+      align-items: flex-start;
+    }
+    .attach-empty {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .attach-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px 5px 8px;
+      border-radius: 20px;
+      border: 1.5px solid var(--brand-border);
+      background: var(--white);
+      color: var(--brand-dark);
+      font-size: 10.5px;
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1.3;
+      word-break: break-all;
+      max-width: 100%;
+    }
+    .attach-chip:hover {
+      background: var(--brand-subtle);
+      border-color: var(--brand);
+    }
+    .attach-chip-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .attach-chip-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .attach-chip-name {
+      color: var(--brand-dark);
+      word-break: break-word;
+    }
+    .attach-chip-hint {
+      font-size: 8.5px;
+      color: var(--text-muted);
+      font-style: italic;
+      font-weight: 500;
+    }
+    @media print {
+      .attach-chip { border-color: var(--brand); }
+    }
+
+    /* ═══════════════════════════════════════════════════════
        DOCUMENT FOOTER
     ═══════════════════════════════════════════════════════ */
     .doc-footer {

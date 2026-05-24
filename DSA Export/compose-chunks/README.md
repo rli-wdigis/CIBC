@@ -15,7 +15,8 @@ concat(
   outputs('Compose_Section4_DataStewardReview'),
   outputs('Compose_Section5_StakeholderDecisions'),
   outputs('Compose_Section6_Notes'),
-  outputs('Compose_Section7_RecordMetadata'),
+  outputs('Compose_Section7_Attachments'),
+  outputs('Compose_Section8_RecordMetadata'),
   '</div>',
   outputs('Compose_HtmlFooter')
 )
@@ -49,6 +50,31 @@ concat(
   '</tr>'
 )
 ```
+
+## Attachments Array
+
+The attachments section requires one Power Automate **Select** action before composing HTML:
+- **`Select_AttachmentRows`** — Select action named **"Select Attachment Rows"** with **Input** = `variables('Attachments')` that maps each attachment to an HTML `<a>` chip using:
+
+```
+concat(
+  '<a href="', item()?['url'], '" target="_blank" class="attach-chip attach-chip--', item()?['type'], '">',
+    '<span class="attach-chip-icon">', if(equals(item()?['type'], 'image'), '🖼️', '📎'), '</span>',
+    if(
+      equals(item()?['type'], 'image'),
+      concat(
+        '<span class="attach-chip-body">',
+          '<span class="attach-chip-name">', item()?['fileName'], '</span>',
+          '<span class="attach-chip-hint">Add a file extension after downloading</span>',
+        '</span>'
+      ),
+      concat('<span class="attach-chip-name">', item()?['fileName'], '</span>')
+    ),
+  '</a>'
+)
+```
+
+> **Note on image type:** Due to a system limitation, image attachments may not have a proper file extension in the stored filename. The chip displays a hint prompting the user to add the correct extension (e.g. `.png`, `.jpg`) after opening the file.
 
 ## Field Mapping (placeholder → source JSON field)
 
